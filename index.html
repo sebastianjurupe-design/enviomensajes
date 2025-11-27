@@ -1,47 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<div style="max-width:600px;margin:20px auto;font-family:system-ui;">
+    <h2>Enviar mensajes por WhatsApp</h2>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <!-- Campo para agregar números -->
+    <label for="phoneInput">Número de teléfono (con código de país, sin + ni espacios):</label><br>
+    <input type="text" id="phoneInput" placeholder="Ej: 51987654321" style="width:100%;padding:8px;margin:5px 0;">
+    <button id="addPhoneBtn" style="padding:8px 12px;margin-bottom:15px;">
+        Agregar número
+    </button>
 
-<body>
-    <div style="max-width:600px;margin:20px auto;font-family:system-ui;">
-        <h2>Enviar mensajes por WhatsApp</h2>
+    <!-- Campo para el mensaje -->
+    <label for="messageInput">Mensaje a enviar:</label><br>
+    <textarea id="messageInput" rows="5" placeholder="Escribe aquí el mensaje que se enviará por WhatsApp…"
+        style="width:100%;padding:8px;margin:5px 0 15px 0;"></textarea>
 
-        <!-- Campo para agregar números -->
-        <label for="phoneInput">Número de teléfono (con código de país, sin + ni espacios):</label><br>
-        <input type="text" id="phoneInput" placeholder="Ej: 51987654321" style="width:100%;padding:8px;margin:5px 0;">
-        <button id="addPhoneBtn" style="padding:8px 12px;margin-bottom:15px;">
-            Agregar número
-        </button>
-
-        <!-- Campo para el mensaje -->
-        <label for="messageInput">Mensaje a enviar:</label><br>
-        <textarea id="messageInput" rows="5" placeholder="Escribe aquí el mensaje que se enviará por WhatsApp…"
-            style="width:100%;padding:8px;margin:5px 0 15px 0;"></textarea>
-
-        <!-- Tabla de números -->
-        <table id="phoneTable" style="width:100%;border-collapse:collapse;margin-top:10px;">
-            <thead>
-                <tr>
-                    <th style="border-bottom:1px solid #ccc;padding:8px;text-align:left;">
-                        Número
-                    </th>
-                    <th style="border-bottom:1px solid #ccc;padding:8px;text-align:left;">
-                        Acción
-                    </th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-</body>
-
-</html>
-
+    <!-- Tabla de números -->
+    <table id="phoneTable" style="width:100%;border-collapse:collapse;margin-top:10px;">
+        <thead>
+            <tr>
+                <th style="border-bottom:1px solid #ccc;padding:8px;text-align:left;">
+                    Número
+                </th>
+                <th style="border-bottom:1px solid #ccc;padding:8px;text-align:left;">
+                    Acción
+                </th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 <script>
     const phoneInput = document.getElementById('phoneInput');
