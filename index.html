@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="max-width:600px;margin:20px auto;font-family:system-ui;">
+        <h2>Enviar mensajes por WhatsApp</h2>
+
+        <!-- Campo para agregar números -->
+        <label for="phoneInput">Número de teléfono (con código de país, sin + ni espacios):</label><br>
+        <input type="text" id="phoneInput" placeholder="Ej: 51987654321" style="width:100%;padding:8px;margin:5px 0;">
+        <button id="addPhoneBtn" style="padding:8px 12px;margin-bottom:15px;">
+            Agregar número
+        </button>
+
+        <!-- Campo para el mensaje -->
+        <label for="messageInput">Mensaje a enviar:</label><br>
+        <textarea id="messageInput" rows="5" placeholder="Escribe aquí el mensaje que se enviará por WhatsApp…"
+            style="width:100%;padding:8px;margin:5px 0 15px 0;"></textarea>
+
+        <!-- Tabla de números -->
+        <table id="phoneTable" style="width:100%;border-collapse:collapse;margin-top:10px;">
+            <thead>
+                <tr>
+                    <th style="border-bottom:1px solid #ccc;padding:8px;text-align:left;">
+                        Número
+                    </th>
+                    <th style="border-bottom:1px solid #ccc;padding:8px;text-align:left;">
+                        Acción
+                    </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    const phoneInput = document.getElementById('phoneInput');
+    const addPhoneBtn = document.getElementById('addPhoneBtn');
+    const messageInput = document.getElementById('messageInput');
+    const phoneTable = document.getElementById('phoneTable').querySelector('tbody');
+
+    // Función para limpiar el número (quitar espacios, +, guiones, etc.)
+    function limpiarNumero(valor) {
+        return valor.replace(/[\s()+-]/g, '');
+    }
+
+    addPhoneBtn.addEventListener('click', function () {
+        let rawNumber = phoneInput.value.trim();
+
+        if (!rawNumber) {
+            alert('Ingresa un número de teléfono.');
+            return;
+        }
+
+        const numero = limpiarNumero(rawNumber);
+
+        if (!/^\d+$/.test(numero)) {
+            alert('El número solo debe contener dígitos (incluye el código de país).');
+            return;
+        }
+
+        // Crear fila en la tabla
+        const tr = document.createElement('tr');
+
+        const tdNumero = document.createElement('td');
+        tdNumero.textContent = numero;
+        tdNumero.style.padding = '8px';
+        tdNumero.style.borderBottom = '1px solid #eee';
+
+        const tdAccion = document.createElement('td');
+        tdAccion.style.padding = '8px';
+        tdAccion.style.borderBottom = '1px solid #eee';
+
+        // Botón para enviar por WhatsApp
+        const sendBtn = document.createElement('button');
+        sendBtn.textContent = 'Enviar por WhatsApp';
+        sendBtn.style.padding = '6px 10px';
+        sendBtn.style.cursor = 'pointer';
+
+        sendBtn.addEventListener('click', function () {
+            const mensaje = messageInput.value.trim();
+
+            if (!mensaje) {
+                alert('Escribe un mensaje antes de enviar.');
+                return;
+            }
+
+            // Construir URL de WhatsApp (formato oficial wa.me)
+            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+            // Abrir WhatsApp en una nueva pestaña
+            window.open(url, '_blank');
+        });
+
+        // (Opcional) botón para eliminar el número de la tabla
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Eliminar';
+        deleteBtn.style.marginLeft = '8px';
+        deleteBtn.style.padding = '6px 10px';
+        deleteBtn.style.cursor = 'pointer';
+
+        deleteBtn.addEventListener('click', function () {
+            tr.remove();
+        });
+
+        tdAccion.appendChild(sendBtn);
+        tdAccion.appendChild(deleteBtn);
+
+        tr.appendChild(tdNumero);
+        tr.appendChild(tdAccion);
+        phoneTable.appendChild(tr);
+
+        // Limpiar input de número
+        phoneInput.value = '';
+        phoneInput.focus();
+    });
+</script>
